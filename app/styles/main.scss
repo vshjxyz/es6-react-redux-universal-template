@@ -1,0 +1,10 @@
+@import "../../node_modules/compass-mixins/lib/compass";
+@import "settings";
+
+body {
+  //background: url("/images/stardust.png") no-repeat;
+  span {
+    background: red;
+    @include border-radius(2px);
+  }
+}
