@@ -42,12 +42,7 @@ export default {
             loaders: [
                 {
                     test: /\.scss$/,
-                    loader: "style-loader!raw-loader!sass-loader?" +
-                        "includePaths[]=" + path.resolve(__dirname, "../../node_modules/compass-mixins/lib/compass")
-                },
-                {
-                    test: /\.css$/,
-                    loader: "style!css"
+                    loader: 'style!css?sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'
                 },
                 {
                     test: /\.js$/,
@@ -56,7 +51,7 @@ export default {
                 },
                 {
                     test: /\.(jpe?g|png|gif|svg|woff|eot|ttf)$/,
-                    loader: 'url?limit=10000&name=[sha512:hash:base64:7].[ext]'
+                    loader: 'url?limit=10000'
                 }
             ]
         },

@@ -1,10 +1,27 @@
 @import "../../node_modules/compass-mixins/lib/compass";
 @import "settings";
 
+* {
+  @include box-sizing(border-box);
+}
+
 body {
-  //background: url("/images/stardust.png") no-repeat;
-  span {
-    background: red;
-    @include border-radius(2px);
+  background: url('../images/stardust.png');
+  height: 100%;
+  widht: 100%;
+}
+
+h1, h2 ,h3 {
+  font-family: 'Alegreya Sans', sans-serif;
+  font-weight: 300;
+  font-size: 60px;
+}
+
+section {
+  width: 100%;
+  h2 {
+    margin: 0 auto;
+    color: #CDCDCD;
+    display: inline-block;
   }
 }
