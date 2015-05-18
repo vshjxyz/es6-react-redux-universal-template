@@ -68,7 +68,8 @@ export default {
         },
         resolve: {
             // Allow to omit extensions when requiring these files
-            extensions: ['', '.js', '.jsx']
+            extensions: ['', '.js', '.jsx'],
+            modulesDirectories: ['node_modules', 'app']
         },
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
