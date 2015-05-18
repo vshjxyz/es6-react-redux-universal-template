@@ -28,7 +28,7 @@ export default {
         devtool: 'source-map',
         entry: {
             app: [
-                './app/app.js',
+                './app/index.js',
                 'webpack/hot/only-dev-server',
                 `webpack-dev-server/client?http://localhost:${WEBPACK_PORT}`
             ]
@@ -42,16 +42,27 @@ export default {
             loaders: [
                 {
                     test: /\.scss$/,
-                    loader: 'style!css?sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'
-                },
-                {
-                    test: /\.js$/,
-                    exclude: /node_modules/,
-                    loader: 'babel-loader'
+                    loaders: [
+                        'style',
+                        'css?sourceMap',
+                        'autoprefixer?browsers=last 2 version',
+                        'sass?outputStyle=expanded&sourceMap'
+                    ]
                 },
                 {
                     test: /\.(jpe?g|png|gif|svg|woff|eot|ttf)$/,
-                    loader: 'url?limit=10000'
+                    loaders: [
+                        'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                        'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                    ]
+                },
+                {
+                    test: /\.js$|.jsx$/,
+                    exclude: /node_modules/,
+                    loaders: [
+                        'react-hot',
+                        'babel'
+                    ]
                 }
             ]
         },

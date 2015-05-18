@@ -1,0 +1,10 @@
+@import "../../styles/settings";
+
+section.header {
+  width: 100%;
+  h2 {
+    margin: 0 auto;
+    color: $gray;
+    display: inline-block;
+  }
+}

@@ -30,6 +30,8 @@
     "imagemin": "^3.2.0",
     "node-sass": "^2.1.1",
     "raw-loader": "^0.5.1",
+    "react": "^0.13.3",
+    "react-hot-loader": "^1.2.7",
     "sass-loader": "^0.6.0",
     "style-loader": "^0.12.2",
     "url-loader": "^0.5.5",
