@@ -8,11 +8,11 @@ const app = express();
 const proxy = httpProxy.createProxyServer();
 let server;
 
-app.get('/', function (req, res) {
+app.getCount('/', function (req, res) {
     res.sendFile(path.join(__dirname, "views/index.html"));
 });
 
-app.get('/assets*', function (req, res) {
+app.getCount('/assets*', function (req, res) {
     proxy.web(req, res, { target: 'http://localhost:3001' });
 });
 
