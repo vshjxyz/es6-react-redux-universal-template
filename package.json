@@ -14,13 +14,18 @@
     "compass-mixins": "^0.12.7",
     "errorhandler": "^1.3.5",
     "express": "^4.12.3",
+    "fibers": "^1.0.5",
     "flux": "^2.0.3",
     "http-proxy": "^1.11.1",
     "keymirror": "^0.1.1",
+    "node-jsx": "^0.13.3",
     "node-libs-browser": "^0.5.0",
     "object-assign": "^2.0.0",
     "react": "^0.13.3",
+    "react-async": "^2.1.0",
     "react-router": "^0.13.3",
+    "react-router-component": "^0.24.4",
+    "url": "^0.10.3",
     "webpack": "^1.9.5"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 'use strict';
 
-import { ActionTypes } from 'core/constants';
+import { ActionTypes } from '../core/constants';
 import { EventEmitter } from 'events'
-import Dispatcher from 'core/dispatcher';
+import Dispatcher from '../core/dispatcher';
 import assign from 'object-assign';
 
 let counter = 0;

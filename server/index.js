@@ -1,25 +1,38 @@
+require('node-jsx').install({extension:'.jsx'});
+
 import express from 'express';
-import path from 'path';
 import httpProxy from 'http-proxy';
-import bodyParser from 'body-parser';
 import errorHandler from 'errorhandler';
+import url from 'url';
+import React from 'react';
+import { renderToStringAsync } from 'react-async';
+import App from '../app/components/app.jsx';
 
 const app = express();
 const proxy = httpProxy.createProxyServer();
 let server;
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, "views/index.html"));
-});
+app.use(errorHandler({
+    dumpExceptions: true,
+    showStack: true
+}));
 
 app.get('/assets*', function (req, res) {
     proxy.web(req, res, { target: 'http://localhost:3001' });
 });
 
-app.use(errorHandler({
-    dumpExceptions: true,
-    showStack: true
-}));
+app.get('*',function(req,res){
+    var path = url.parse(req.url).pathname;
+    let appFactory = React.createFactory(App);
+
+    renderToStringAsync(appFactory({path:path}),function(err, markup) {
+        if (err) {
+            console.error(err);
+        } else {
+            res.send('<!DOCTYPE html>' + markup);
+        }
+    });
+});
 
 const startServer = () => {
     if (!server) {

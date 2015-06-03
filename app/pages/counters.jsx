@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import Counter from 'components/counter/main';
+import Counter from '../components/counter/main';
 
 export default React.createClass({
     displayName: 'Counters',

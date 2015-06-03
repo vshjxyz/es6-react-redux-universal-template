@@ -1,7 +1,10 @@
 'use strict';
 
 import React from 'react';
-import './header.scss';
+
+if (process.env.BROWSER) {
+    require('./header.scss');
+}
 
 export default React.createClass({
     displayName: 'Header',
@@ -10,7 +13,7 @@ export default React.createClass({
         return (
             <section className="header">
                 <header>
-                    <h2>That's just as test.</h2>
+                    <h2>That's just a test.</h2>
                 </header>
             </section>
         );

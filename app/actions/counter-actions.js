@@ -1,7 +1,7 @@
 'use strict';
 
-import { ActionTypes } from 'core/constants';
-import Dispatcher from 'core/dispatcher';
+import { ActionTypes } from '../core/constants';
+import Dispatcher from '../core/dispatcher';
 
 export default {
     add(amount) {

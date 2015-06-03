@@ -1,8 +1,8 @@
 'use strict';
 
 import React from 'react';
-import CounterStore from 'stores/counter-store';
-import CounterActions from 'actions/counter-actions';
+import CounterStore from '../../stores/counter-store';
+import CounterActions from '../../actions/counter-actions';
 
 export default React.createClass({
     displayName: 'Counter',
@@ -22,6 +22,7 @@ export default React.createClass({
     },
 
     componentDidMount() {
+        this._onChange();
         CounterStore.addChangeListener(this._onChange);
     },
 
