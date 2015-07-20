@@ -14,12 +14,20 @@ if (process.env.BROWSER) {
 export default React.createClass({
     displayName: 'App',
     render() {
+        let cssLinks = [];
+        if (this.props.css) {
+            cssLinks = this.props.css.map((href, k) => {
+                return <link key={k} rel="stylesheet" type="text/css" href={'/assets/' + href} />
+            });
+        }
+
         return (
             <html>
                 <head lang="en">
                     <meta charSet="UTF-8" />
                     <title>Blabla</title>
                     <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:100,300,400' rel='stylesheet' type='text/css' />
+                    { cssLinks }
                 </head>
                 <body>
                     <div id="app-wrapper">

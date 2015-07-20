@@ -9,7 +9,7 @@ export default React.createClass({
     render() {
         let counters = [];
         for(let i = 0; i < 10; i++) {
-            counters.push(<Counter step={i} />);
+            counters.push(<Counter key={'Counter-' + i} step={i} />);
         }
         return (
             <div>
