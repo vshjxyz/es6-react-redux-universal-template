@@ -25,7 +25,7 @@ will be here when the project will stabilize
 
 TODOs
 ---
- * Find out how webpack is building the production's assets
+ * ~~Find out how webpack is building the production's assets~~
  * ~~Go Isomorphic (using react server/client side)~~
  * ~~Find out how react handles routing and enable pushState~~
  * Connect to db?
