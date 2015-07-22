@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --progress --stats --config ./webpack/prod.config.js",
-    "dev": "node --harmony ./webpack/dev-server.js",
+    "dev": "NODE_ENV=development node --harmony ./webpack/dev-server.js",
     "start": "node --harmony ./server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -42,6 +42,9 @@ export default React.createClass({
                             <NotFound handler={NotFoundView} />
                         </Locations>
                     </div>
+
+                    <div dangerouslySetInnerHTML={{__html: '<script>window.cssLinks =' + JSON.stringify(this.props.css) + ' || [];</script>'}} />
+
                     <script src="/assets/bundle.js"></script>
                 </body>
             </html>

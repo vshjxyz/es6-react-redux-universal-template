@@ -27,8 +27,6 @@ app.get('/assets*', function (req, res) {
     }
 });
 
-//app.use('/assets*', express.static(path.join(__dirname + '../dist')));
-
 app.get('*',function(req,res){
     var path = url.parse(req.url).pathname;
     let appFactory = React.createFactory(App);
@@ -46,7 +44,7 @@ app.get('*',function(req,res){
         });
     };
 
-    if (process.env.NODE_ENV != 'development') {    
+    if (process.env.NODE_ENV != 'development') {
         let glob = require("glob");
         glob(process.cwd() + "/dist/*.css", null, function (er, files) {
             let css = files.map((file) => {

@@ -7,9 +7,7 @@ if (module.hot) {
     module.hot.accept();
 }
 
-if (process.env.BROWSER) {
-    window.onload = function() {
-        const app = React.createElement(App, {});
-        React.render(app, document);
-    }
-}
+window.onload = function() {
+    const app = React.createElement(App, {css: cssLinks});
+    React.render(app, document);
+};
