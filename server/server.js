@@ -1,13 +1,15 @@
-require('node-jsx').install({extension:'.jsx'});
-
 import express from 'express';
 import httpProxy from 'http-proxy';
 import errorHandler from 'errorhandler';
 import url from 'url';
 import path from 'path';
 import React from 'react';
+import Router from 'react-router';
 import { renderToStringAsync } from 'react-async';
 import App from '../app/components/app.jsx';
+import routes from '../app/routes';
+import { RouteErrors } from  '../app/core/constants';
+import globPromise from './globPromise';
 
 const app = express();
 let server;
@@ -27,36 +29,90 @@ app.get('/assets*', function (req, res) {
     }
 });
 
-//app.use('/assets*', express.static(path.join(__dirname + '../dist')));
+let renderRouter = (req) => {
+    return new Promise((resolve, reject) => {
+        let url = req.url;
+        let router = Router.create({
+            routes: routes,
+            location: url,
+            onAbort: (route) => {
+                return reject({
+                    error: RouteErrors.REDIRECT,
+                    route: route
+                });
+            },
 
-app.get('*',function(req,res){
-    var path = url.parse(req.url).pathname;
-    let appFactory = React.createFactory(App);
-
-    let renderPage = (res, css, path) => {
-        renderToStringAsync(appFactory({
-            css: css,
-            path: path
-        }),function(err, markup) {
-            if (err) {
-                console.error(err);
-            } else {
-                res.send('<!DOCTYPE html>' + markup);
+            onError: () => {
+                return reject({
+                    error: RouteErrors.ROUTING
+                });
             }
         });
-    };
 
-    if (process.env.NODE_ENV != 'development') {    
-        let glob = require("glob");
-        glob(process.cwd() + "/dist/*.css", null, function (er, files) {
-            let css = files.map((file) => {
-                return file.replace(/^.*[\\\/]/, '');
-            });
-            renderPage(res, css, path);
+        router.run((Handler, state) => {
+            if (state.routes[0].name === 'not-found') {
+                let prerenderedNotFoundPage = React.renderToStaticMarkup(React.createFactory(Handler)());
+                return reject({
+                    error: RouteErrors.NOT_FOUND,
+                    html: prerenderedNotFoundPage
+                });
+            }
+
+            if (process.env.NODE_ENV != 'development') {
+                Promise.all([
+                    globPromise(process.cwd() + '/dist/*.css'),
+                    globPromise(process.cwd() + '/dist/*.js')
+                ]).then(([cssList, jsList]) => {
+                    let prerenderedPage = React.renderToString(React.createFactory(Handler)({
+                        styles: cssList,
+                        scripts: jsList
+                    }));
+                    resolve({
+                        html: prerenderedPage
+                    });
+                }, reject);
+            } else {
+                let prerenderedPage = React.renderToString(React.createFactory(Handler)({
+                    scripts: [ 'bundle.js' ]
+                }));
+                resolve({
+                    html: prerenderedPage
+                });
+            }
         });
-    } else {
-        renderPage(res, [], path);
-    }
+    });
+};
+
+
+app.get('*',function(req,res){
+    renderRouter(req)
+        .then((renderedRouter) => {
+            let html = renderedRouter.html;
+            res.send('<!DOCTYPE html>' + html);
+        })
+        .catch((renderedRouter) => {
+            let error = renderedRouter.error;
+            let html = renderedRouter.html;
+
+            switch (error) {
+                case RouteErrors.ROUTING:
+                    res.status(500);
+                    res.send('Routing error');
+                    break;
+                case RouteErrors.REDIRECT:
+                    res.redirect(renderedRouter.route.to);
+                    break;
+                case RouteErrors.NOT_FOUND:
+                    res.status(404);
+                    res.send(html);
+                    break;
+                default:
+                    console.error(renderedRouter.stack || renderedRouter.stacktrace || renderedRouter);
+                    res.status(500);
+                    res.send('Server Error');
+                    break;
+            }
+        });
 });
 
 const startServer = () => {

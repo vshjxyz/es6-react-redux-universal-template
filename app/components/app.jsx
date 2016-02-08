@@ -1,11 +1,8 @@
 'use strict';
 
 import React from 'react';
-import { Locations, Location, Link, NotFound } from 'react-router-component';
+import { Link, RouteHandler } from 'react-router';
 import Header from '../components/header/main';
-import InfoView from '../pages/info';
-import CountersView from '../pages/counters';
-import NotFoundView from '../pages/not-found';
 
 if (process.env.BROWSER) {
     require('../styles/app.scss');
@@ -13,11 +10,20 @@ if (process.env.BROWSER) {
 
 export default React.createClass({
     displayName: 'App',
+    contextTypes: {
+        router: React.PropTypes.func
+    },
     render() {
         let cssLinks = [];
-        if (this.props.css) {
-            cssLinks = this.props.css.map((href, k) => {
+        let jsLinks = [];
+        if (this.props.styles) {
+            cssLinks = this.props.styles.map((href, k) => {
                 return <link key={k} rel="stylesheet" type="text/css" href={'/assets/' + href} />
+            });
+        }
+        if (this.props.scripts) {
+            jsLinks = this.props.scripts.map((src, k) => {
+                return <script key={k} src={'/assets/' + src} />
             });
         }
 
@@ -33,16 +39,12 @@ export default React.createClass({
                     <div id="app-wrapper">
                         <Header />
                         <ul>
-                            <li><Link href="/info">Info</Link></li>
-                            <li><Link href="/counters">Counters</Link></li>
+                            <li><Link to="/info">Info</Link></li>
+                            <li><Link to="/counters">Counters</Link></li>
                         </ul>
-                        <Locations path={this.props.path}>
-                            <Location path="/info" handler={InfoView} />
-                            <Location path="/counters" handler={CountersView} />
-                            <NotFound handler={NotFoundView} />
-                        </Locations>
+                        <RouteHandler />
                     </div>
-                    <script src="/assets/bundle.js"></script>
+                    { jsLinks }
                 </body>
             </html>
         );

@@ -5,6 +5,7 @@
 delete process.env.BROWSER;
 
 // Install `babel` hook for ES6
+require('babel/polyfill');
 require('babel/register');
 
 // Start the server

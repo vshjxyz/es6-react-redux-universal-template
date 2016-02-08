@@ -72,6 +72,9 @@ export default {
             modulesDirectories: ['node_modules', 'app']
         },
         plugins: [
+            new webpack.PrefetchPlugin('react'),
+            new webpack.PrefetchPlugin('react-router'),
+
             new webpack.HotModuleReplacementPlugin(),
 
             new webpack.DefinePlugin({
@@ -81,7 +84,11 @@ export default {
                 }
             }),
 
-            function () { this.plugin('done', startServer); }
+            function () {
+                let customPlugin = () => {};
+                customPlugin.prototype.apply = startServer;
+                return new customPlugin();
+            }
         ]
     }
 };
