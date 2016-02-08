@@ -12,7 +12,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, '../dist'),
-        filename: 'bundle.js',
+        filename: '[id].[hash].bundle.js',
         publicPath: '/assets/'
     },
     module: {
@@ -43,8 +43,34 @@ module.exports = {
         modulesDirectories: ['node_modules', 'app']
     },
     plugins: [
-        // extract css
-        new ExtractTextPlugin("[name].css", {
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.CommonsChunkPlugin('vendor', '[id].[hash].vendor.bundle.js'),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            mangle: false,
+            compress: {
+                warnings: false,
+                screw_ie8: true,
+                sequences: true,
+                dead_code: true,
+                drop_debugger: true,
+                comparisons: true,
+                conditionals: true,
+                evaluate: true,
+                booleans: true,
+                loops: true,
+                unused: true,
+                hoist_funs: true,
+                if_return: true,
+                join_vars: true,
+                cascade: true,
+                drop_console: true
+            },
+            output: {
+                comments: false
+            }
+        }),
+        new ExtractTextPlugin('[id].[hash].[name].css', {
             allChunks: true
         })
     ]
