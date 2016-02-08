@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import startServer from '../server';
+import startServer from '../server/server';
 
 const WEBPACK_PORT = 3001;
 
@@ -77,6 +77,7 @@ export default {
 
             new webpack.HotModuleReplacementPlugin(),
 
+            // These variables are visible only through the chain of files defined on the entrypoint
             new webpack.DefinePlugin({
                 'process.env': {
                     BROWSER: JSON.stringify(true),
