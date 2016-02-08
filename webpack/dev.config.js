@@ -58,7 +58,7 @@ export default {
                 },
                 {
                     test: /\.js$|.jsx$/,
-                    exclude: /node_modules/,
+                    exclude: /(node_modules|bower_components)/,
                     loaders: [
                         'react-hot',
                         'babel'
@@ -85,11 +85,7 @@ export default {
                 }
             }),
 
-            function () {
-                let customPlugin = () => {};
-                customPlugin.prototype.apply = startServer;
-                return new customPlugin();
-            }
+            startServer
         ]
     }
 };

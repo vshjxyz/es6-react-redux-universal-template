@@ -5,7 +5,7 @@ A simple template powered by webpack that allows you to use
  * ES6 client and server side
  * React templates
  * Flux architecture and Facebook's Dispatcher
- * Isomorphic architecture using react-async
+ * Isomorphic architecture
  * Express.js
  * SCSS + compass support
 
@@ -28,7 +28,5 @@ TODOs
  * ~~Find out how webpack is building the production's assets~~
  * ~~Go Isomorphic (using react server/client side)~~
  * ~~Find out how react handles routing and enable pushState~~
- * Connect to db?
- * Use Flux's stores with offline capabilities?
- * Use Alt/Fluxible/Anything suitable to set-up proper isomorphic state hydrate/dehydrate
- * Find out how to test react/flux properly
+ * Use Redux instead of plain flux
+ * Test coverage

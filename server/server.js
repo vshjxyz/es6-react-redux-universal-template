@@ -4,8 +4,8 @@ import errorHandler from 'errorhandler';
 import url from 'url';
 import path from 'path';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server'
 import Router from 'react-router';
-import { renderToStringAsync } from 'react-async';
 import App from '../app/components/app.jsx';
 import routes from '../app/routes';
 import { RouteErrors } from  '../app/core/constants';
@@ -51,7 +51,7 @@ let renderRouter = (req) => {
 
         router.run((Handler, state) => {
             if (state.routes[0].name === 'not-found') {
-                let prerenderedNotFoundPage = React.renderToStaticMarkup(React.createFactory(Handler)());
+                let prerenderedNotFoundPage = ReactDOMServer.renderToStaticMarkup(React.createFactory(Handler)());
                 return reject({
                     error: RouteErrors.NOT_FOUND,
                     html: prerenderedNotFoundPage
@@ -63,7 +63,7 @@ let renderRouter = (req) => {
                     globPromise(process.cwd() + '/dist/*.css'),
                     globPromise(process.cwd() + '/dist/*.js')
                 ]).then(([cssList, jsList]) => {
-                    let prerenderedPage = React.renderToString(React.createFactory(Handler)({
+                    let prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)({
                         styles: cssList,
                         scripts: jsList
                     }));
@@ -72,7 +72,7 @@ let renderRouter = (req) => {
                     });
                 }, reject);
             } else {
-                let prerenderedPage = React.renderToString(React.createFactory(Handler)({
+                let prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)({
                     scripts: [ 'bundle.js' ]
                 }));
                 resolve({

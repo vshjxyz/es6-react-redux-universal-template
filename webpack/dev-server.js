@@ -1,6 +1,6 @@
 'use strict';
 
-require('babel/register');
+require('babel-register');
 
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');

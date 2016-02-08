@@ -1,5 +1,6 @@
 import App from './components/app';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import routes from './routes';
 import Router from 'react-router';
 
@@ -9,6 +10,6 @@ if (module.hot) {
 
 window.onload = function() {
     Router.run(routes, Router.HistoryLocation, function(Handler) {
-        React.render(<Handler />, document);
+        ReactDOM.render(<Handler />, document);
     });
-}
+};

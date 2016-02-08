@@ -1,4 +1,4 @@
-require('babel/register');
+require('babel-register');
 
 var path = require('path');
 var webpack = require('webpack');
@@ -30,7 +30,7 @@ module.exports = {
             },
             {
                 test: /\.js$|.jsx$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|bower_components)/,
                 loaders: [
                     'babel'
                 ]
