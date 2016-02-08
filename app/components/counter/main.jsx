@@ -1,48 +1,34 @@
-'use strict';
-
 import React from 'react';
-import CounterStore from '../../stores/counter-store';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CounterActions from '../../actions/counter-actions';
 
-export default React.createClass({
+const Counter = React.createClass({
     displayName: 'Counter',
 
     propTypes: {
         step: React.PropTypes.number.isRequired
     },
 
-    updateState() {
-        return {
-            count: CounterStore.getCount()
-        }
-    },
-
-    getInitialState() {
-        return this.updateState();
-    },
-
-    componentDidMount() {
-        this._onChange();
-        CounterStore.addChangeListener(this._onChange);
-    },
-
-    componentWillUnmount() {
-        CounterStore.removeChangeListener(this._onChange);
-    },
-
-    _onChange() {
-        this.setState(this.updateState());
-    },
-
     addCount() {
-        CounterActions.add(this.props.step);
+        this.props.add(this.props.step);
     },
 
     render() {
         return (
             <button className="counter" onClick={ this.addCount }>
-                {this.state.count}
+                {this.props.count}
             </button>
         );
     }
 });
+
+export default connect(
+    (state) => {
+        return {
+            count: state.counter
+        };
+    },
+    (dispatch) => bindActionCreators(CounterActions, dispatch)
+)(Counter);
+

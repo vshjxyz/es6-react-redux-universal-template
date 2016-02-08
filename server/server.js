@@ -49,8 +49,8 @@ let renderRouter = (req) => {
             }
         });
 
-        router.run((Handler, state) => {
-            if (state.routes[0].name === 'not-found') {
+        router.run((Handler, routerState) => {
+            if (routerState.routes[0].name === 'not-found') {
                 let prerenderedNotFoundPage = ReactDOMServer.renderToStaticMarkup(React.createFactory(Handler)());
                 return reject({
                     error: RouteErrors.NOT_FOUND,
