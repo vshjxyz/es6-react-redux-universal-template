@@ -10,6 +10,6 @@ if (module.hot) {
 
 window.onload = function() {
     Router.run(routes, Router.HistoryLocation, function(Handler, routerState) {
-        ReactDOM.render(<Handler routerState={routerState} />, document);
+        ReactDOM.render(<Handler routerState={routerState} />, document.getElementById('app-wrapper'));
     });
 };

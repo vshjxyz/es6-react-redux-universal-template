@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base Template</title>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:100,300,400' rel='stylesheet' type='text/css' />
+    <% for(var i = 0; i < styles.length; i++) { %>
+        <link rel="stylesheet" type="text/css" href="<%= '/assets/' + styles[i] %>" />
+    <% } %>
+</head>
+<body>
+<section id="app-wrapper"><%- html %></section>
+<% for(var i = 0; i < scripts.length; i++) { %>
+<script src="<%= '/assets/' + scripts[i] %>"></script>
+<% } %>
+</body>
+</html>

@@ -19,6 +19,7 @@
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-register": "^6.5.1",
+    "ejs": "^2.4.1",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
     "history": "^1.17.0",

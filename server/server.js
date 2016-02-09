@@ -14,6 +14,9 @@ import globPromise from './globPromise';
 const app = express();
 let server;
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
 app.use(errorHandler({
     dumpExceptions: true,
     showStack: true
@@ -63,20 +66,19 @@ let renderRouter = (req) => {
                     globPromise(process.cwd() + '/dist/*.css'),
                     globPromise(process.cwd() + '/dist/*.js')
                 ]).then(([cssList, jsList]) => {
-                    let prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)({
+                    const prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)());
+                    resolve({
+                        html: prerenderedPage,
                         styles: cssList,
                         scripts: jsList
-                    }));
-                    resolve({
-                        html: prerenderedPage
                     });
                 }, reject);
             } else {
-                let prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)({
-                    scripts: [ 'bundle.js' ]
-                }));
+                const prerenderedPage = ReactDOMServer.renderToString(React.createFactory(Handler)());
                 resolve({
-                    html: prerenderedPage
+                    html: prerenderedPage,
+                    styles: [],
+                    scripts: [ 'bundle.js' ]
                 });
             }
         });
@@ -87,8 +89,7 @@ let renderRouter = (req) => {
 app.get('*',function(req,res){
     renderRouter(req)
         .then((renderedRouter) => {
-            let html = renderedRouter.html;
-            res.send('<!DOCTYPE html>' + html);
+            res.render('index', renderedRouter);
         })
         .catch((renderedRouter) => {
             let error = renderedRouter.error;
