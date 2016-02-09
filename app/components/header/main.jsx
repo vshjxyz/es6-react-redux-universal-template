@@ -3,7 +3,7 @@
 import React from 'react';
 
 if (process.env.BROWSER) {
-    //require('./header.scss');
+    require('./header.scss');
 }
 
 export default React.createClass({
