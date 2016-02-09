@@ -65,10 +65,9 @@ const startServer = () => {
 };
 
 process.on('exit', () => {
-        if (server) {
-            server.kill('SIGTERM');
-        }
+    if (server) {
+        server.kill('SIGTERM');
     }
-);
+});
 
 export default startServer;

@@ -28,5 +28,5 @@ TODOs
  * ~~Find out how webpack is building the production's assets~~
  * ~~Go Isomorphic (using react server/client side)~~
  * ~~Find out how react handles routing and enable pushState~~
- * Use Redux instead of plain flux
+ * ~~Use Redux instead of plain flux~~
  * Test coverage
