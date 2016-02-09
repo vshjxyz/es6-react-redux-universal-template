@@ -21,6 +21,7 @@
     "consolidate": "^0.14.0",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
+    "handlebars": "^4.0.5",
     "history": "1.17.0",
     "http-proxy": "^1.13.1",
     "keymirror": "^0.1.1",
