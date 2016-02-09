@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base Template</title>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:100,300,400' rel='stylesheet' type='text/css' />
+    {{#each styles}}
+        <link rel="stylesheet" type="text/css" href="/assets/{{{ this }}}" />
+    {{/each}}
+</head>
+<body>
+<section id="app-wrapper">{{{ html }}}</section>
+{{#each scripts}}
+<script src="/assets/{{{ this }}}"></script>
+{{/each}}
+</body>
+</html>

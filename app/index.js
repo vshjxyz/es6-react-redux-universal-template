@@ -3,13 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import routes from './routes';
 import Router from 'react-router';
+import { createHistory } from 'history';
 
 if (module.hot) {
     module.hot.accept();
 }
 
-window.onload = function() {
-    Router.run(routes, Router.HistoryLocation, function(Handler, routerState) {
-        ReactDOM.render(<Handler routerState={routerState} />, document.getElementById('app-wrapper'));
-    });
+window.onload = () => {
+    ReactDOM.render(<Router history={createHistory()} routes={routes} />, document.getElementById('app-wrapper'));
 };

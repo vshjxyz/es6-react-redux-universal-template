@@ -27,7 +27,7 @@ export default React.createClass({
                     <li><Link to="/counters">Counters</Link></li>
                 </ul>
                 <Provider store={store}>
-                    <RouteHandler />
+                    { this.props.children }
                 </Provider>
             </section>
         );
