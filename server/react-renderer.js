@@ -1,29 +1,28 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server'
-import * as Router from 'react-router';
-import { createLocation } from 'history';
+import { match, RouterContext } from 'react-router';
 import { RouteErrors } from  '../app/core/constants';
 import routes from '../app/routes';
 import globPromise from './glob-promise';
 
 const routeUrl = (url) => {
     return new Promise((resolve, reject) => {
-        Router.match({
+        match({
             routes: routes,
-            location: createLocation(url),
-            onAbort: (route) => {
-                return reject({
+            location: url
+        }, (error, redirectLocation, renderProps) => {
+            if (error) {
+                reject({
+                    error: RouteErrors.ROUTING
+                });
+            } else if (redirectLocation) {
+                reject({
                     error: RouteErrors.REDIRECT,
                     route: route
                 });
-            },
-            onError: () => {
-                return reject({
-                    error: RouteErrors.ROUTING
-                });
+            } else {
+                resolve(renderProps);
             }
-        }, (error, redirectLocation, renderProps) => {
-            resolve(renderProps);
         });
     }).then((routerProps) => {
             if (routerProps.routes[0].path === '*') { // Not found
@@ -39,7 +38,7 @@ const routeUrl = (url) => {
 
 const renderRouter = (routerProps) => {
     return new Promise((resolve, reject) => {
-        const prerenderedPage = ReactDOMServer.renderToString(<Router.RoutingContext {...routerProps} />);
+        const prerenderedPage = ReactDOMServer.renderToString(<RouterContext {...routerProps} />);
 
         if (process.env.NODE_ENV != 'development') {
             Promise.all([

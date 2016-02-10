@@ -16,7 +16,7 @@ const store = configureStore();
 export default React.createClass({
     displayName: 'App',
     contextTypes: {
-        router: React.PropTypes.func
+        router: React.PropTypes.object.isRequired
     },
     render() {
         return (
