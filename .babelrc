@@ -4,6 +4,23 @@
         "es2015"
     ],
     "plugins": [
-      "babel-plugin-add-module-exports"
-    ]
+        "babel-plugin-add-module-exports"
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                [
+                    "react-transform", {
+                        "transforms": [{
+                            "transform": "react-transform-catch-errors",
+                            "imports": [
+                                "react",
+                                "redbox-react"
+                            ]
+                        }]
+                    }
+                ]
+            ]
+        }
+    }
 }

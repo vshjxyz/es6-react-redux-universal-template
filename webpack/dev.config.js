@@ -36,7 +36,8 @@ export default {
         output: {
             path: path.join(__dirname, '../dist'),
             filename: 'bundle.js',
-            publicPath: 'http://localhost:3001/assets/'
+            publicPath: 'http://localhost:3001/assets/',
+            devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
         },
         module: {
             loaders: [
@@ -75,6 +76,7 @@ export default {
             new webpack.PrefetchPlugin('react'),
             new webpack.PrefetchPlugin('react-router'),
 
+            new webpack.NoErrorsPlugin(),
             new webpack.HotModuleReplacementPlugin(),
 
             // These variables are visible only through the chain of files defined on the entrypoint
