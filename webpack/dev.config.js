@@ -42,7 +42,7 @@ export default {
         module: {
             loaders: [
                 {
-                    test: /\.scss$/,
+                    test: /\.scss$|\.css/,
                     loaders: [
                         'style',
                         'css?sourceMap',
@@ -51,14 +51,20 @@ export default {
                     ]
                 },
                 {
-                    test: /\.(jpe?g|png|gif|svg|woff|eot|ttf)$/,
+                    test: /\.(svg|woff|eot|ttf|woff2)/,
+                    loaders: [
+                        'file?hash=sha512&digest=hex&name=[hash].[ext]'
+                    ]
+                },
+                {
+                    test: /\.(jpe?g|png|gif)$/,
                     loaders: [
                         'file?hash=sha512&digest=hex&name=[hash].[ext]',
                         'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
                     ]
                 },
                 {
-                    test: /\.js$|.jsx$/,
+                    test: /\.js$|\.jsx$/,
                     exclude: /(node_modules|bower_components)/,
                     loaders: [
                         'react-hot',
