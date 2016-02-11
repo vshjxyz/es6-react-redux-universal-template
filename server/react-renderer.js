@@ -18,7 +18,7 @@ const routeUrl = (url) => {
             } else if (redirectLocation) {
                 reject({
                     error: RouteErrors.REDIRECT,
-                    route: route
+                    route: redirectLocation
                 });
             } else {
                 resolve(renderProps);

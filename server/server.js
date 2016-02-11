@@ -41,7 +41,7 @@ app.get('*',function(req,res){
                     res.render('index', { html: 'Routing error'});
                     break;
                 case RouteErrors.REDIRECT:
-                    res.redirect(renderedRouter.route.to);
+                    res.redirect(renderedRouter.route.pathname);
                     break;
                 case RouteErrors.NOT_FOUND:
                     res.status(404);
