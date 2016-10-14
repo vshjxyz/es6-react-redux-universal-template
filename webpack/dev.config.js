@@ -46,7 +46,7 @@ export default {
                     loaders: [
                         'style',
                         'css?sourceMap',
-                        'autoprefixer?browsers=last 2 version',
+                        'postcss?browsers=last 2 version',
                         'sass?outputStyle=expanded&sourceMap'
                     ]
                 },

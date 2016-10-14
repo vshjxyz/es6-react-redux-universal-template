@@ -19,7 +19,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.scss|\.css$/,
-                loader: ExtractTextPlugin.extract('css!autoprefixer?browsers=last 2 version!sass')
+                loader: ExtractTextPlugin.extract('css!postcss?browsers=last 2 version!sass')
             },
             {
                 test: /\.(svg|woff|eot|ttf|woff2)/,
