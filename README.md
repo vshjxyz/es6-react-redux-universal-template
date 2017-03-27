@@ -1,11 +1,12 @@
-es6-react-flux-node-quickstart
+es6-react-redux-universal-template
 ====
 
 A simple template powered by webpack that allows you to use
  * ES6 client and server side
- * React templates
- * Flux architecture and Facebook's Dispatcher
+ * React
+ * Redux
  * Isomorphic architecture
+ * Webpack
  * Express.js
  * SCSS + compass support
 
