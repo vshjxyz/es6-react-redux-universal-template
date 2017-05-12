@@ -71,7 +71,13 @@ module.exports = {
     },
     plugins: [
         new PrepackWebpackPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: '[id].[hash].vendor.bundle.js' }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            filename: '[id].[hash].vendor.bundle.js',
+            minChunks: function(module){
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             mangle: false,

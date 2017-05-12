@@ -31,7 +31,7 @@
     "keymirror": "^0.1.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-redux": "^4.4.5",
+    "react-redux": "^5.0.4",
     "react-router": "^2.8.1",
     "redux": "^3.6.0"
   },
@@ -52,7 +52,7 @@
     "sass-loader": "^6.0.5",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
-    "webpack-dashboard": "^0.2.0",
+    "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "^2.4.5"
   }
 }
