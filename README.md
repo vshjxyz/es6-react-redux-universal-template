@@ -22,7 +22,35 @@ Visit `localhost:8080` after the bundle is marked as VALID
 
 Directory structure
 ---
-will be here when the project will stabilize
+```
+.
+├── README.md
+├── app
+│   ├── actions       // Where actions live
+│   ├── components    // Components have their own folders here
+│   │   └── App.jsx   // Root component
+│   ├── images        // Image assets
+│   ├── index.js      // Entry point file for client-side
+│   ├── pages         // Page-level components
+│   ├── reducers      // Where all the reducers should be
+│   ├── routes.jsx    // React-router routes (Needs to be updated to V4 as they broke everything...again)
+│   ├── store         // Redux store creation script(s)
+│   └── styles        // Scss common styles, the component-level styles should live in /components/componentname/componentname.scss
+├── node_modules
+├── dist              // Dist folder will contain the built file for production use (populated with yarn run build)
+├── package.json
+├── server
+│   ├── glob-promise.js     // Utility to glob using promise pattern
+│   ├── index.js            // Server entry-point
+│   ├── react-renderer.js   // React-router render methods to map to real HTTP statuses
+│   ├── server.js           // Express Js code and calls to react-renderer in order to provide proper output when SSR
+│   └── views               // Outlining view, this might be avoided completely with a bit more work
+├── webpack
+│   ├── dev-server.js       // Webpack dev server init code
+│   ├── dev.config.js       // Webpack dev mode code (used when running yarn run dev)
+│   └── prod.config.js      // Webpack production mode code (used when running yarn run build)
+└── yarn.lock
+```
 
 TODOs
 ---
