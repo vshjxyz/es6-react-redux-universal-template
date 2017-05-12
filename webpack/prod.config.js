@@ -3,6 +3,7 @@ require('babel-register');
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
 
 module.exports = {
     entry: {
@@ -16,42 +17,62 @@ module.exports = {
         publicPath: '/assets/'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.scss|\.css$/,
-                loader: ExtractTextPlugin.extract('css!postcss?browsers=last 2 version!sass')
+                loader: ExtractTextPlugin.extract('css-loader!sass-loader')
             },
             {
                 test: /\.(svg|woff|eot|ttf|woff2)/,
                 loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]'
+                    'file-loader?hash=sha512&digest=hex&name=[hash].[ext]'
                 ]
             },
             {
                 test: /\.(jpe?g|png|gif)$/,
                 loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                    'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+                    {
+                        loader: 'image-webpack-loader',
+                        query: {
+                            mozjpeg: {
+                                progressive: true,
+                            },
+                            gifsicle: {
+                                interlaced: false,
+                            },
+                            optipng: {
+                                optimizationLevel: 4,
+                            },
+                            pngquant: {
+                                quality: '75-90',
+                                speed: 3,
+                            },
+                        },
+                    }
                 ]
             },
             {
                 test: /\.js$|\.jsx$/,
                 exclude: /(node_modules|bower_components)/,
                 loaders: [
-                    'babel'
+                    'babel-loader'
                 ]
             }
         ]
     },
     resolve: {
         // Allow to omit extensions when requiring these files
-        extensions: ['', '.js', '.jsx'],
-        modulesDirectories: ['node_modules', 'app']
+        extensions: ['.js', '.jsx'],
+        modules: [
+            'node_modules',
+            path.join(__dirname, 'app')
+        ]
     },
     plugins: [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.CommonsChunkPlugin('vendor', '[id].[hash].vendor.bundle.js'),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new PrepackWebpackPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: '[id].[hash].vendor.bundle.js' }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             mangle: false,
             compress: {
@@ -76,7 +97,8 @@ module.exports = {
                 comments: false
             }
         }),
-        new ExtractTextPlugin('[id].[hash].[name].css', {
+        new ExtractTextPlugin({
+            filename: '[id].[hash].[name].css',
             allChunks: true
         })
     ]

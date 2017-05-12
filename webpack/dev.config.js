@@ -40,49 +40,69 @@ export default {
             devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
         },
         module: {
-            loaders: [
+            rules: [
                 {
                     test: /\.scss$|\.css/,
+
                     loaders: [
-                        'style',
-                        'css?sourceMap',
-                        'postcss?browsers=last 2 version',
-                        'sass?outputStyle=expanded&sourceMap'
+                        'style-loader',
+                        'css-loader?sourceMap',
+                        'sass-loader?outputStyle=expanded&sourceMap'
                     ]
                 },
                 {
                     test: /\.(svg|woff|eot|ttf|woff2)/,
                     loaders: [
-                        'file?hash=sha512&digest=hex&name=[hash].[ext]'
+                        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]'
                     ]
                 },
                 {
                     test: /\.(jpe?g|png|gif)$/,
                     loaders: [
-                        'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                        'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+                        {
+                            loader: 'image-webpack-loader',
+                            query: {
+                                mozjpeg: {
+                                    progressive: true,
+                                },
+                                gifsicle: {
+                                    interlaced: false,
+                                },
+                                optipng: {
+                                    optimizationLevel: 4,
+                                },
+                                pngquant: {
+                                    quality: '75-90',
+                                    speed: 3,
+                                },
+                            },
+                        }
                     ]
                 },
                 {
                     test: /\.js$|\.jsx$/,
                     exclude: /(node_modules|bower_components)/,
                     loaders: [
-                        'react-hot',
-                        'babel'
+                        'react-hot-loader',
+                        'babel-loader?retainLines=true'
                     ]
                 }
             ]
         },
         resolve: {
             // Allow to omit extensions when requiring these files
-            extensions: ['', '.js', '.jsx'],
-            modulesDirectories: ['node_modules', 'app']
+            extensions: ['.js', '.jsx'],
+            modules: [
+                'node_modules',
+                path.join(__dirname, 'app')
+            ]
         },
         plugins: [
             new webpack.PrefetchPlugin('react'),
             new webpack.PrefetchPlugin('react-router'),
 
-            new webpack.NoErrorsPlugin(),
+            new webpack.NoEmitOnErrorsPlugin(),
             new webpack.HotModuleReplacementPlugin(),
 
             // These variables are visible only through the chain of files defined on the entrypoint
